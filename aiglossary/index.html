@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Glossary</title>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .smooth-scroll { scroll-behavior: smooth; }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0a192f',
+                            blue: '#112240',
+                            light: '#233554',
+                            accent: '#64ffda',
+                            text: '#8892b0',
+                            white: '#e6f1ff'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 smooth-scroll">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // --- Icons ---
+        const IconWrapper = ({ children, size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
+        );
+        const Search = (props) => (<IconWrapper {...props}><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></IconWrapper>);
+        const Menu = (props) => (<IconWrapper {...props}><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></IconWrapper>);
+        const X = (props) => (<IconWrapper {...props}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></IconWrapper>);
+        const ArrowUp = (props) => (<IconWrapper {...props}><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></IconWrapper>);
+        const Globe = (props) => (<IconWrapper {...props}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></IconWrapper>);
+        const Github = (props) => (<IconWrapper {...props}><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></IconWrapper>);
+        const Linkedin = (props) => (<IconWrapper {...props}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></IconWrapper>);
+        const Mail = (props) => (<IconWrapper {...props}><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></IconWrapper>);
+        const BookOpen = (props) => (<IconWrapper {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></IconWrapper>);
+
+        // --- COMPLETE GLOSSARY DATA ---
+        const glossaryData = [
+            {
+                letter: "A",
+                terms: [
+                    { term: "Accuracy", def: "A common evaluation metric in machine learning, indicating the proportion of correct predictions out of all predictions made. For classification, it’s computed as (number of correct predictions) / (total predictions). High accuracy means a model’s predictions closely match the true labels, but it can be misleading if the data is imbalanced (e.g. high accuracy by always predicting the majority class)." },
+                    { term: "Activation Function", def: "In neural networks, the mathematical function applied to a neuron’s weighted input to produce its output. It introduces non-linearity, enabling the network to learn complex patterns. Examples include ReLU (Rectified Linear Unit), sigmoid, and tanh, each affecting how signals propagate and gradients flow during training." },
+                    { term: "Agent (AI Agent)", def: "An autonomous software system that perceives its environment, makes decisions, and acts on those decisions to achieve specific goals with minimal human intervention. Agents use techniques like large language model reasoning, tool use, and memory to carry out tasks independently. They can operate continuously and adapt their actions based on feedback or changes in the environment." },
+                    { term: "Agent Communication Protocol (ACP)", def: "A communication standard (spearheaded by IBM) that allows multiple AI agents to share updates and coordinate their actions in real time. Often described as a 'group chat' for AI, ACP keeps distributed agents in sync by enabling them to exchange status information and avoid duplicating work." },
+                    { term: "Agent Payments Protocol (AP2)", def: "A protocol introduced in 2025 to enable AI agents to perform financial transactions on behalf of users securely. It provides a standardized, payment-agnostic framework for agent-initiated payments, essentially acting as the 'money layer' in an AI agent ecosystem." },
+                    { term: "Agent-to-Agent Protocol (A2A)", def: "A communication protocol (launched by Google in 2025) that enables different AI agents to discover and talk to each other directly. It acts as an instant messaging or 'handshake' system for AI, allowing agents to delegate tasks and collaborate securely across various platforms without human micromanagement." },
+                    { term: "AI (Artificial Intelligence)", def: "The broad concept of machines performing tasks that typically require human intelligence, such as reasoning, perception, decision-making, and language understanding. AI can be realized through various approaches, from rule-based systems to machine learning. Any technique enabling computers to mimic cognitive functions falls under this umbrella." },
+                    { term: "AI Alignment", def: "The challenge of designing AI systems such that their goals and behaviors are aligned with human values and intentions. An AI system is considered 'aligned' if it reliably advances its operators’ intended objectives and does not pursue undesired outcomes or proxy goals in harmful ways." },
+                    { term: "AI Bias (Algorithmic Bias)", def: "The tendency of an AI system to reflect and potentially amplify biases present in its training data. This can lead to unfair or skewed outcomes, such as a hiring algorithm disproportionately filtering out candidates of a certain demographic. Mitigation involves diverse training data and fairness-aware algorithms." },
+                    { term: "AI Governance", def: "The framework of policies, guidelines, and oversight mechanisms for deploying AI systems in a safe, ethical, and transparent manner. It includes setting standards for privacy, accountability, and fairness, as well as compliance with regulations like the EU AI Act." },
+                    { term: "AI Safety", def: "An interdisciplinary field focused on preventing unintended harm from AI systems and ensuring they operate reliably and as intended. It encompasses AI alignment, robustness, monitoring for anomalies, and contingency planning for AI failures." },
+                    { term: "AI as a Service (AIaaS)", def: "The delivery of AI capabilities as cloud-based services, allowing organizations to leverage AI tools and models without building them from scratch. Examples include APIs for computer vision or NLP provided by major cloud vendors." },
+                    { term: "AlphaGo", def: "A landmark AI system developed by Google DeepMind that defeated the world champion in the board game Go in 2016. It combined deep neural networks with Monte Carlo Tree Search to evaluate positions and plan moves, learning from millions of human and self-play games." },
+                    { term: "Artificial General Intelligence (AGI)", def: "A hypothetical future AI that possesses broad cognitive abilities at the human level or beyond. Unlike narrow AI, an AGI would be capable of understanding, learning, and applying intelligence to virtually any problem across all domains." },
+                    { term: "Artificial Narrow Intelligence (ANI)", def: "Also known as 'narrow AI,' this refers to AI systems highly specialized for a single task or limited domain. Nearly all AI in use today (e.g., translation apps, recommendation systems) is ANI." },
+                    { term: "Artificial Neural Network (ANN)", def: "See Neural Network. A computational model inspired by the biological neural networks in human brains." },
+                    { term: "AutoML (Automated Machine Learning)", def: "Tools and techniques for automating the end-to-end process of applying machine learning to real-world problems. AutoML platforms handle tasks like data preprocessing, feature selection, model selection, and hyperparameter tuning automatically." },
+                    { term: "Autoencoder", def: "A type of neural network used for unsupervised learning of efficient representations. It consists of an encoder that compresses input data into a lower-dimensional latent code, and a decoder that reconstructs the original data from that code." },
+                    { term: "AutoGPT", def: "An experimental open-source project combining an LLM (like GPT-4) with a task-driven feedback loop and external tool use to create an 'autonomous AI agent.' It can recursively prompt itself, plan sub-tasks, and execute them to achieve a high-level goal." },
+                    { term: "A/B Testing", def: "A method of comparing two versions of a model or product (A vs. B) to determine which performs better according to a defined metric. It is crucial in ML-driven products for validating improvements before full rollout." }
+                ]
+            },
+            {
+                letter: "B",
+                terms: [
+                    { term: "Backpropagation", def: "The core algorithm for training neural networks, efficiently computing the gradient of the loss function with respect to each weight. It propagates the error backward through the network layers using the chain rule of calculus to update weights." },
+                    { term: "Bagging (Bootstrap Aggregating)", def: "An ensemble learning technique aimed at improving model stability and accuracy. It involves training multiple instances of the same base model on different random subsets of the training data and averaging their predictions." },
+                    { term: "Batch Normalization", def: "A technique to stabilize and speed up the training of deep neural networks by normalizing layer inputs for each mini-batch. It helps mitigate internal covariate shift and allows for higher learning rates." },
+                    { term: "Bayes’ Theorem", def: "A fundamental formula in probability describing how to update the probability of a hypothesis as more evidence becomes available. It underpins Bayesian inference in machine learning." },
+                    { term: "Bias–Variance Tradeoff", def: "The balance between error due to overly simplistic assumptions (bias) and error due to sensitivity to small fluctuations in training data (variance). Minimizing total error requires finding the optimal balance between the two." },
+                    { term: "Boosting", def: "An ensemble strategy that combines many weak learners sequentially. Each new model focuses on correcting the errors of the previous ones. Examples include AdaBoost, XGBoost, and LightGBM." },
+                    { term: "BERT", def: "Bidirectional Encoder Representations from Transformers. A groundbreaking language model by Google that learns from text bidirectionally to produce rich text embeddings, widely used for NLP tasks." },
+                    { term: "Big Data", def: "Datasets that are too large, fast, or complex for traditional data processing tools. Characterized by Volume, Velocity, and Variety, big data is a key enabler for training powerful AI models." }
+                ]
+            },
+            {
+                letter: "C",
+                terms: [
+                    { term: "Chain-of-Thought Prompting", def: "A prompting technique where an LLM is instructed to produce its reasoning steps before giving a final answer. This encourages the model to output a logical chain of intermediate conclusions, improving performance on complex tasks." },
+                    { term: "Chatbot", def: "A software application simulating human conversation through text or voice interactions. Modern chatbots leverage NLP and LLMs to understand free-form input and generate contextually appropriate responses." },
+                    { term: "Classification", def: "The task of predicting a discrete class label for a given input (e.g., 'spam' vs 'not spam')." },
+                    { term: "Cloud Computing", def: "The delivery of computing services (servers, storage, ML models) over the internet on a pay-for-use basis. It provides the scalable infrastructure necessary for training and deploying large AI models." },
+                    { term: "Confusion Matrix", def: "A table describing the performance of a classification model by showing actual vs. predicted classifications. It breaks down results into True Positives, False Positives, False Negatives, and True Negatives." },
+                    { term: "Container (Docker)", def: "A lightweight, standalone executable package including everything needed to run a piece of software (code, runtime, libraries). Containers ensure ML models run consistently across different environments." },
+                    { term: "CI/CD", def: "Continuous Integration/Continuous Deployment. Automated practices for testing code changes and deploying software releases frequently. In ML, this involves automating model training, testing, and deployment pipelines." },
+                    { term: "ControlNet", def: "A technique for diffusion models allowing users to control the structure or pose of generated images via additional conditioning (e.g., a sketch or depth map)." },
+                    { term: "Convolutional Neural Network (CNN)", def: "A deep neural network class particularly suited for processing grid-like data such as images. CNNs use convolution layers to automatically learn spatial hierarchies of features." },
+                    { term: "Cross-Validation", def: "A technique for assessing how a predictive model will generalize to an independent dataset. Data is partitioned into subsets (folds), and the model is trained/tested on different combinations to ensure robust evaluation." }
+                ]
+            },
+            {
+                letter: "D",
+                terms: [
+                    { term: "Data Augmentation", def: "Increasing the effective size and diversity of a training dataset by creating modified copies of existing data (e.g., rotating images, adding noise). This helps prevent overfitting." },
+                    { term: "Data Privacy", def: "Practices and technologies protecting sensitive information used in AI. This includes anonymization, encryption, and compliance with regulations like GDPR to prevent unauthorized exposure of user data." },
+                    { term: "Data Science", def: "An interdisciplinary field combining statistics, mathematics, and programming to extract insights from data. It spans the entire pipeline from data collection to modeling and decision-making." },
+                    { term: "Dataset", def: "A collection of data examples used for training or evaluating an AI model. Typically split into training, validation, and test sets." },
+                    { term: "Decision Tree", def: "A model that learns decision rules from data in a tree structure. Each node represents a test on a feature, and each branch represents an outcome." },
+                    { term: "Deep Learning", def: "A subset of machine learning using neural networks with multiple layers ('deep') to learn complex representations of data. It drives modern advances in vision, speech, and NLP." },
+                    { term: "Diffusion Model", def: "A class of generative models that create data (like images) by iteratively denoising random noise to recover a coherent output. Examples include Stable Diffusion and DALL-E." },
+                    { term: "Dropout", def: "A regularization technique for neural networks where a fraction of neurons are randomly 'dropped' (ignored) during training to prevent overfitting." }
+                ]
+            },
+            {
+                letter: "E",
+                terms: [
+                    { term: "Edge AI", def: "Running AI algorithms locally on edge devices (like smartphones, IoT sensors) rather than in a centralized cloud. This improves latency and privacy." },
+                    { term: "Ensemble Learning", def: "Combining multiple models to produce a more powerful predictor. Techniques include Bagging, Boosting, and Stacking." },
+                    { term: "Epoch", def: "One full pass through the entire training dataset during the model training process." },
+                    { term: "Explainable AI (XAI)", def: "Methods to make the behavior and decisions of AI systems understandable to humans. This is crucial for trust and accountability in black-box models." },
+                    { term: "Exploratory Data Analysis (EDA)", def: "The initial phase of analyzing datasets to summarize their main characteristics, often using visual methods to detect patterns and anomalies." }
+                ]
+            },
+            {
+                letter: "F",
+                terms: [
+                    { term: "Federated Learning", def: "A machine learning paradigm where a model is trained collaboratively on data from multiple devices without pooling the raw data centrally, preserving privacy." },
+                    { term: "Feature Engineering", def: "The process of transforming raw data into input features that better represent the problem to predictive models, improving performance." },
+                    { term: "Few-Shot Learning", def: "The ability of a model to adapt to a new task or recognize new classes with only a small number of examples." },
+                    { term: "Fine-Tuning", def: "Taking a pretrained model (like a Foundation Model) and training it further on a specific task or dataset to specialize its capabilities." },
+                    { term: "Foundation Model", def: "A large-scale model trained on broad data at scale (often self-supervised) that can be adapted to a wide range of downstream tasks (e.g., GPT-4, BERT)." },
+                    { term: "F1-Score", def: "The harmonic mean of precision and recall. It is a single metric used to evaluate classification models, especially useful when classes are imbalanced." }
+                ]
+            },
+            {
+                letter: "G",
+                terms: [
+                    { term: "GAN (Generative Adversarial Network)", def: "A generative framework where two neural networks (Generator and Discriminator) compete. The generator creates fakes, and the discriminator tries to detect them, leading to realistic outputs." },
+                    { term: "Generalization", def: "The ability of an AI model to perform well on new, unseen data, rather than just memorizing the training data." },
+                    { term: "Generative AI", def: "A branch of AI focused on creating new content (text, images, audio, code) that is often indistinguishable from human-produced content." },
+                    { term: "GPU (Graphics Processing Unit)", def: "Specialized hardware originally for graphics, now essential for AI. Its parallel processing architecture significantly accelerates matrix operations used in neural network training." },
+                    { term: "GPT (Generative Pre-trained Transformer)", def: "A family of large language models by OpenAI. They are pre-trained on massive text datasets and use the Transformer architecture to generate human-like text." },
+                    { term: "Graph Neural Network (GNN)", def: "Neural networks designed to perform inference on data described by graphs (nodes and edges), useful for social networks and molecular chemistry." },
+                    { term: "Gradient Descent", def: "The primary optimization algorithm used to train neural networks. It iteratively adjusts model parameters to minimize the loss function." },
+                    { term: "Gradient Boosting", def: "An ensemble technique where new models are sequentially added to correct the errors of the existing ensemble, often using decision trees." }
+                ]
+            },
+            {
+                letter: "H",
+                terms: [
+                    { term: "Hallucination", def: "A phenomenon where an AI model generates output that sounds plausible but is factually incorrect or ungrounded in reality." },
+                    { term: "Hardware Acceleration", def: "Using specialized hardware like TPUs, GPUs, or FPGAs to speed up AI computations for training and inference." },
+                    { term: "Human-in-the-Loop", def: "A setup where human judgment is incorporated into the AI workflow, such as labeling data, providing feedback (RLHF), or reviewing decisions." },
+                    { term: "Hybrid AI (Neuro-Symbolic)", def: "Systems that combine learning-based approaches (neural networks) with symbolic reasoning (logic rules) to leverage the strengths of both." },
+                    { term: "Hyperparameter", def: "A configuration value controlling the learning process (e.g., learning rate, batch size) set before training begins." },
+                    { term: "Hyperparameter Tuning", def: "The process of finding the optimal set of hyperparameters to maximize model performance, often using grid search or Bayesian optimization." }
+                ]
+            },
+            {
+                letter: "I",
+                terms: [
+                    { term: "Image Recognition", def: "The task of identifying objects, scenes, or categories within an image." },
+                    { term: "Imbalanced Data", def: "A scenario where certain classes in a dataset are far less frequent than others (e.g., 99% normal transactions vs 1% fraud)." },
+                    { term: "Inference", def: "The process of using a trained model to make predictions on new, unseen data." },
+                    { term: "Interpretability", def: "The degree to which a human can understand the cause of a decision made by a model." },
+                    { term: "IoT (Internet of Things)", def: "A network of physical objects embedded with sensors and software that collect and exchange data, often serving as a source for AI models." }
+                ]
+            },
+            {
+                letter: "J",
+                terms: [
+                    { term: "JSON", def: "JavaScript Object Notation. A lightweight data-interchange format commonly used for sending data to and from AI model APIs." },
+                    { term: "Jupyter Notebook", def: "An interactive coding environment widely used in data science for creating documents with live code, visualizations, and narrative text." }
+                ]
+            },
+            {
+                letter: "K",
+                terms: [
+                    { term: "K-Means Clustering", def: "A popular unsupervised algorithm that partitions data into 'k' clusters by assigning points to the nearest centroid." },
+                    { term: "Knowledge Graph", def: "A structured representation of facts where entities (nodes) are connected by relationships (edges), used to provide context to AI models." },
+                    { term: "Kubernetes", def: "An open-source platform for automating deployment, scaling, and management of containerized applications, widely used for serving ML models at scale." }
+                ]
+            },
+            {
+                letter: "L",
+                terms: [
+                    { term: "LangChain", def: "An open-source framework that facilitates building applications powered by LLMs by chaining together model calls and integrating external tools." },
+                    { term: "Large Language Model (LLM)", def: "A language model with billions of parameters trained on massive text corpora, capable of understanding and generating human-like text." },
+                    { term: "Latent Space", def: "An abstract multi-dimensional space where a model encodes data. Similar data points are mapped closer together in this space." },
+                    { term: "Learning Rate", def: "A hyperparameter that determines the step size at each iteration while moving toward a minimum of a loss function." },
+                    { term: "LLMOps", def: "Machine Learning Operations practices specifically tailored for the unique challenges of deploying and managing Large Language Models." },
+                    { term: "Logistic Regression", def: "A statistical model used for binary classification, predicting the probability of an instance belonging to a particular class." },
+                    { term: "LSTM (Long Short-Term Memory)", def: "A type of Recurrent Neural Network (RNN) architecture designed to learn long-term dependencies in sequence data." }
+                ]
+            },
+            {
+                letter: "M",
+                terms: [
+                    { term: "Machine Learning (ML)", def: "A subset of AI enabling computers to learn patterns from data and improve from experience without being explicitly programmed." },
+                    { term: "Memory (AI)", def: "Mechanisms that allow models to retain information over time, such as context windows in LLMs or hidden states in RNNs." },
+                    { term: "Model Context Protocol (MCP)", def: "A standard connecting AI models to external data and tools. It acts like a 'USB for AI,' allowing agents to plug into databases and APIs securely." },
+                    { term: "Model Drift", def: "The degradation of model performance over time as the production data distribution diverges from the training data." },
+                    { term: "MLOps", def: "Machine Learning Operations. A set of practices to deploy and maintain machine learning models in production reliably and efficiently." }
+                ]
+            },
+            {
+                letter: "N",
+                terms: [
+                    { term: "Natural Language Processing (NLP)", def: "A field of AI focused on enabling computers to understand, interpret, and generate human language." },
+                    { term: "Neural Network", def: "A computational model inspired by the human brain, composed of layers of interconnected nodes (neurons) that process information." },
+                    { term: "Normalization", def: "The process of scaling numeric features to a common range (e.g., 0 to 1) to ensure they contribute equally to the learning process." },
+                    { term: "NumPy", def: "A fundamental Python library for scientific computing, providing support for large, multi-dimensional arrays and matrices." }
+                ]
+            },
+            {
+                letter: "O",
+                terms: [
+                    { term: "Object Detection", def: "A computer vision task that involves identifying and locating objects within an image using bounding boxes." },
+                    { term: "One-Hot Encoding", def: "A method for representing categorical variables as binary vectors where exactly one bit is 'hot' (1) and the rest are zero." },
+                    { term: "Overfitting", def: "A modeling error where a function is too closely fit to the training data points (capturing noise), resulting in poor generalization to new data." }
+                ]
+            },
+            {
+                letter: "P",
+                terms: [
+                    { term: "Pandas", def: "A fast, powerful, flexible, and easy-to-use open-source data analysis and manipulation tool built on top of the Python programming language." },
+                    { term: "Precision and Recall", def: "Evaluation metrics for classification. Precision measures the accuracy of positive predictions; Recall measures the ability to find all actual positives." },
+                    { term: "Pretraining", def: "The phase of training a model on a large dataset (often unsupervised) to learn general features before fine-tuning on a specific task." },
+                    { term: "Principal Component Analysis (PCA)", def: "An unsupervised dimensionality reduction technique that finds the principal components (directions of maximum variance) in data." },
+                    { term: "Prompt Engineering", def: "The practice of designing and refining inputs (prompts) to generative models to elicit specific and high-quality outputs." },
+                    { term: "Prompt Injection", def: "A security exploit where malicious inputs are used to manipulate a language model's behavior or bypass restrictions." },
+                    { term: "PyTorch", def: "An open-source machine learning library developed by Facebook's AI Research lab, known for its flexibility and dynamic computation graphs." }
+                ]
+            },
+            {
+                letter: "Q",
+                terms: [
+                    { term: "Q-Learning", def: "A model-free reinforcement learning algorithm to learn the value of an action in a particular state." },
+                    { term: "Quantization", def: "The process of reducing the precision of a model's weights and activations (e.g., from 32-bit float to 8-bit integer) to reduce size and increase inference speed." },
+                    { term: "Quantum Computing (for AI)", def: "The use of quantum-mechanical phenomena to perform computation. In AI, it holds the potential to accelerate optimization and sampling tasks." }
+                ]
+            },
+            {
+                letter: "R",
+                terms: [
+                    { term: "RAG (Retrieval-Augmented Generation)", def: "A technique that enhances LLMs by retrieving relevant information from an external knowledge base to generate more accurate and grounded responses." },
+                    { term: "Recurrent Neural Network (RNN)", def: "A class of neural networks where connections between nodes form a directed graph along a temporal sequence, making them suitable for sequence data." },
+                    { term: "Reinforcement Learning (RL)", def: "A type of machine learning where an agent learns to make decisions by performing actions in an environment and receiving rewards or penalties." },
+                    { term: "Reinforcement Learning from Human Feedback (RLHF)", def: "A method to fine-tune language models using human feedback to align the model's behavior with human preferences." },
+                    { term: "ReLU (Rectified Linear Unit)", def: "A popular activation function in neural networks defined as f(x) = max(0, x). It introduces non-linearity and helps alleviate the vanishing gradient problem." },
+                    { term: "Reproducibility", def: "The ability to obtain consistent results using the same data, code, and parameters. It is critical for the reliability of scientific claims in AI." },
+                    { term: "ResNet (Residual Network)", def: "A deep neural network architecture that uses skip connections (residuals) to allow gradients to flow more easily, enabling the training of very deep networks." }
+                ]
+            },
+            {
+                letter: "S",
+                terms: [
+                    { term: "Scikit-Learn", def: "A widely used Python library for classical machine learning, offering simple and efficient tools for data mining and data analysis." },
+                    { term: "Self-Attention", def: "A mechanism relating different positions of a single sequence in order to compute a representation of the sequence. It is the key component of the Transformer architecture." },
+                    { term: "Self-Supervised Learning", def: "A form of unsupervised learning where the data provides the supervision itself (e.g., masking words in a sentence and predicting them)." },
+                    { term: "Semi-Supervised Learning", def: "A learning approach that combines a small amount of labeled data with a large amount of unlabeled data during training." },
+                    { term: "SGD (Stochastic Gradient Descent)", def: "An iterative method for optimizing an objective function. It approximates the gradient using a single or a few training examples." },
+                    { term: "Sharding", def: "A database partitioning technique used in AI to split large models or datasets across multiple devices to enable parallel processing." },
+                    { term: "Softmax", def: "A function that turns a vector of K real values into a vector of K real values that sum to 1, representing a probability distribution." },
+                    { term: "SQL", def: "Structured Query Language. A domain-specific language used in programming and designed for managing data held in a relational database management system." },
+                    { term: "Stable Diffusion", def: "A deep learning, text-to-image model released in 2022 that uses diffusion techniques to generate detailed images conditioned on text descriptions." },
+                    { term: "Supervised Learning", def: "The machine learning task of learning a function that maps an input to an output based on example input-output pairs." },
+                    { term: "Support Vector Machine (SVM)", def: "A supervised learning model that analyzes data for classification and regression analysis by finding the hyperplane that best divides a dataset into classes." }
+                ]
+            },
+            {
+                letter: "T",
+                terms: [
+                    { term: "Time Series Forecasting", def: "The use of a model to predict future values based on previously observed values in a time-ordered sequence." },
+                    { term: "TinyML", def: "A field of study dedicated to exploring and implementing machine learning models on resource-constrained devices like microcontrollers." },
+                    { term: "Token", def: "The fundamental unit of text (e.g., a word or subword) that an NLP model processes." },
+                    { term: "TPU (Tensor Processing Unit)", def: "An AI accelerator application-specific integrated circuit (ASIC) developed by Google specifically for neural network machine learning." },
+                    { term: "Transfer Learning", def: "A machine learning technique where a model developed for a task is reused as the starting point for a model on a second task." },
+                    { term: "Transformer", def: "A deep learning model architecture relying on the self-attention mechanism, which has revolutionized NLP." },
+                    { term: "Turing Test", def: "A test of a machine's ability to exhibit intelligent behavior equivalent to, or indistinguishable from, that of a human." }
+                ]
+            }
+        ];
+
+        // --- Components ---
+
+        const NavLink = ({ href, children, isExternal }) => (
+            <a 
+                href={href} 
+                className="text-gray-300 hover:text-white transition-colors duration-200 text-sm font-medium"
+                target={isExternal ? "_blank" : "_self"}
+                rel={isExternal ? "noopener noreferrer" : ""}
+            >
+                {children}
+            </a>
+        );
+
+        const AlphabetNav = ({ activeLetter }) => {
+            // Dynamically generate the alphabet based on existing data
+            const availableLetters = useMemo(() => {
+                return [...new Set(glossaryData.map(g => g.letter))].sort();
+            }, []);
+            
+            return (
+                <div className="sticky top-20 z-40 bg-white/95 backdrop-blur border-b border-gray-200 py-4 mb-8 shadow-sm overflow-x-auto">
+                    <div className="max-w-7xl mx-auto px-4 flex gap-2 md:gap-4 justify-start md:justify-center min-w-max">
+                        {availableLetters.map(letter => (
+                            <a
+                                key={letter}
+                                href={`#section-${letter}`}
+                                className={`
+                                    w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold transition-all
+                                    hover:bg-brand-blue hover:text-white cursor-pointer
+                                    ${activeLetter === letter ? 'bg-brand-blue text-white scale-110' : 'text-gray-600 bg-gray-100'}
+                                `}
+                            >
+                                {letter}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const TermCard = ({ term, def }) => (
+            <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-100 group h-full">
+                <h3 className="text-xl font-bold text-brand-blue mb-3 group-hover:text-blue-600 transition-colors">
+                    {term}
+                </h3>
+                <p className="text-gray-600 leading-relaxed text-sm">
+                    {def}
+                </p>
+            </div>
+        );
+
+        const Footer = () => (
+            <footer className="bg-brand-navy text-gray-400 py-12 mt-20">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="grid md:grid-cols-3 gap-8 mb-12">
+                        <div>
+                            <h3 className="text-white text-lg font-bold mb-6">AI Glossary</h3>
+                            <p className="text-sm leading-relaxed mb-6 max-w-xs">
+                                A comprehensive resource for understanding the terminology of Artificial Intelligence and Machine Learning.
+                            </p>
+                            <div className="flex gap-4">
+                                <a href="https://github.com/Decoding-Data-Science/nov25" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"><Github size={20} /></a>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 className="text-white font-bold mb-6">Resources</h4>
+                            <ul className="space-y-3 text-sm">
+                                <li><a href="https://github.com/Decoding-Data-Science/nov25" target="_blank" rel="noopener noreferrer" className="hover:text-white flex items-center gap-2"><Globe size={14}/> GitHub Repository</a></li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 className="text-white font-bold mb-6">Explore Glossary</h4>
+                            <div className="flex flex-wrap gap-2 text-xs font-mono">
+                                {[...new Set(glossaryData.map(g => g.letter))].sort().map(l => (
+                                    <a key={l} href={`#section-${l}`} className="hover:text-white w-5 text-center">{l}</a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+                        <p>&copy; 2025 AI Glossary. All rights reserved.</p>
+                        <p className="flex items-center gap-2">
+                            Open Source Knowledge
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            const [searchTerm, setSearchTerm] = useState("");
+            const [activeLetter, setActiveLetter] = useState("");
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+            // Handle scroll effects
+            useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 20);
+                    
+                    // Update active letter based on scroll position
+                    const sections = document.querySelectorAll('section[id^="section-"]');
+                    let currentSection = "";
+                    sections.forEach(section => {
+                        const rect = section.getBoundingClientRect();
+                        // 200px offset for the sticky header
+                        if (rect.top >= 0 && rect.top <= 400) {
+                            currentSection = section.id.split('-')[1];
+                        }
+                    });
+                    if (currentSection) setActiveLetter(currentSection);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // Filter logic
+            const filteredData = useMemo(() => {
+                if (!searchTerm) return glossaryData;
+                const lowerTerm = searchTerm.toLowerCase();
+                
+                return glossaryData.map(group => ({
+                    letter: group.letter,
+                    terms: group.terms.filter(t => 
+                        t.term.toLowerCase().includes(lowerTerm) || 
+                        t.def.toLowerCase().includes(lowerTerm)
+                    )
+                })).filter(group => group.terms.length > 0);
+            }, [searchTerm]);
+
+            return (
+                <div className="min-h-screen flex flex-col">
+                    {/* Header */}
+                    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-brand-navy shadow-lg py-3' : 'bg-brand-navy py-5'}`}>
+                        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <span className="text-white font-bold text-lg">AI Glossary</span>
+                            </div>
+
+                            {/* Desktop Nav */}
+                            <div className="hidden md:flex items-center gap-8">
+                                <NavLink href="https://github.com/Decoding-Data-Science/nov25" isExternal>Resources</NavLink>
+                                <a href="#search" className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-colors flex items-center gap-2">
+                                    <Search size={16} /> Search
+                                </a>
+                            </div>
+
+                            {/* Mobile Menu Button */}
+                            <button 
+                                className="md:hidden text-white"
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            >
+                                {isMobileMenuOpen ? <X /> : <Menu />}
+                            </button>
+                        </div>
+
+                        {/* Mobile Menu */}
+                        {isMobileMenuOpen && (
+                            <div className="md:hidden absolute top-full left-0 w-full bg-brand-navy border-t border-gray-800 p-4 flex flex-col gap-4 shadow-xl">
+                                <a href="https://github.com/Decoding-Data-Science/nov25" className="text-gray-300 block py-2" target="_blank" rel="noopener noreferrer">Resources</a>
+                            </div>
+                        )}
+                    </nav>
+
+                    {/* Hero Section */}
+                    <header className="bg-brand-navy pt-32 pb-20 px-4 text-center relative overflow-hidden">
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                        <div className="max-w-3xl mx-auto relative z-10">
+                            <div className="inline-block bg-blue-900/50 text-blue-200 text-xs font-bold px-3 py-1 rounded-full mb-6 border border-blue-700">
+                                2025 EDITION
+                            </div>
+                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+                                AI Terminology <span className="text-blue-400">A to Z</span>
+                            </h1>
+                            <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+                                The definitive glossary for data scientists, engineers, and AI enthusiasts. 
+                                Master the language of Artificial Intelligence.
+                            </p>
+                            
+                            <div className="relative max-w-xl mx-auto" id="search">
+                                <input
+                                    type="text"
+                                    placeholder="Search for terms (e.g., 'Transformer', 'Agent')..."
+                                    className="w-full px-6 py-4 rounded-full text-gray-900 bg-white shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-500/30 text-lg"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                                    <Search />
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Alphabet Navigation */}
+                    <AlphabetNav activeLetter={activeLetter} />
+
+                    {/* Main Content */}
+                    <main className="max-w-7xl mx-auto px-4 flex-grow w-full">
+                        {filteredData.length === 0 ? (
+                            <div className="text-center py-20">
+                                <div className="inline-block p-4 rounded-full bg-gray-100 mb-4">
+                                    <BookOpen size={32} className="text-gray-400" />
+                                </div>
+                                <h3 className="text-xl font-bold text-gray-700 mb-2">No terms found</h3>
+                                <p className="text-gray-500">Try adjusting your search query.</p>
+                            </div>
+                        ) : (
+                            filteredData.map((group) => (
+                                <section 
+                                    key={group.letter} 
+                                    id={`section-${group.letter}`} 
+                                    className="scroll-mt-40 mb-16"
+                                >
+                                    <div className="flex items-center gap-4 mb-8 border-b border-gray-200 pb-2">
+                                        <h2 className="text-5xl font-black text-gray-200 select-none">
+                                            {group.letter}
+                                        </h2>
+                                        <div className="h-px bg-gray-100 flex-grow"></div>
+                                    </div>
+                                    
+                                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {group.terms.map((item, idx) => (
+                                            <TermCard key={idx} term={item.term} def={item.def} />
+                                        ))}
+                                    </div>
+                                </section>
+                            ))
+                        )}
+                    </main>
+
+                    {/* Scroll to Top */}
+                    <button 
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        className={`fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all z-40 ${isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                        aria-label="Scroll to top"
+                    >
+                        <ArrowUp size={24} />
+                    </button>
+
+                    <Footer />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
