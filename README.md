@@ -2,7 +2,9 @@ Perfect 👍 Here’s the **final beginner-friendly `README.md`** including **�
 
 ---
 
-# 🧠 AI Technical Training (Days 1 – 5)
+# 🧠 AI Technical Training 
+
+Glossary - https://decoding-data-science.github.io/aiglossary2025/#resources
 
 Welcome to your **AI Technical Training Repository!**
 This repo contains all the **notebooks, datasets, and resources** you’ll use during the first 5 days of training.
