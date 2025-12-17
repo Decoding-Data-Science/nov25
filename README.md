@@ -1,5 +1,3 @@
-Perfect 👍 Here’s the **final beginner-friendly `README.md`** including **“Open in Colab” badges** for each Day 1–5 notebook — clean, simple, and ready for GitHub:
-
 ---
 
 # 🧠 AI Technical Training 
@@ -11,6 +9,8 @@ This repo contains all the **notebooks, datasets, and resources** you’ll use d
 
 We’ll be using **Google Colab** for everything — no software installation required.
 
+Kahoot https://github.com/Decoding-Data-Science/nov25/tree/main/kahoot
+Slides https://github.com/Decoding-Data-Science/nov25/tree/main/Slides
 ---
 
 ## 🚀 Quick Start
