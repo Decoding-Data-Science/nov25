@@ -155,6 +155,7 @@ Glossary / Resources: https://decoding-data-science.github.io/aiglossary2025/#re
 Videos Link
 
 GPU Video https://www.youtube.com/watch?time_continue=4&v=Ge-g3xZ5bb8
+Transformer Visualization https://drive.google.com/file/d/1rySg_ZDd-GKEK66S5wFdmOcLNcMnCmuS/view?usp=drive_link
 
 ## Folder Structure
 
