@@ -9,8 +9,8 @@ This repo contains all the **notebooks, datasets, and resources** you’ll use d
 
 We’ll be using **Google Colab** for everything — no software installation required.
 
-Kahoot https://github.com/Decoding-Data-Science/nov25/tree/main/kahoot
-Slides https://github.com/Decoding-Data-Science/nov25/tree/main/Slides
+## Kahoot https://github.com/Decoding-Data-Science/nov25/tree/main/kahoot
+## Slides https://github.com/Decoding-Data-Science/nov25/tree/main/Slides
 ---
 
 ## 🚀 Quick Start
@@ -152,6 +152,9 @@ Glossary / Resources: https://decoding-data-science.github.io/aiglossary2025/#re
 - Visual AI (clip project): https://colab.research.google.com/github/Decoding-Data-Science/nov25/blob/main/energy_plant_visual_ai_clip_project.ipynb  
 
 ---
+Videos Link
+
+GPU Video https://www.youtube.com/watch?time_continue=4&v=Ge-g3xZ5bb8
 
 ## Folder Structure
 
